@@ -109,7 +109,7 @@ class BannerComponentFragment : Fragment() {
         colorList[0] = darkColor
         colorList[1] = lightColor
 
-        val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colorList)
+        val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colorList)
 
         binding.viewBackground.background = gradientDrawable
     }
