@@ -123,6 +123,7 @@ class BannerComponentFragment : Fragment() {
 
         binding.buttonInfo.background = gradientDrawable
         binding.viewBackground.background = gradientDrawable
+
     }
 
     private fun applySettings() {
