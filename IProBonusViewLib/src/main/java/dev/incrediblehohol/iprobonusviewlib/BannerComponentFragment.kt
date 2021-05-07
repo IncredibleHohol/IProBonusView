@@ -170,6 +170,12 @@ class BannerComponentFragment : Fragment() {
     }
 
     companion object {
+
+        /**
+         * U must pass @param clientId and @param deviceId
+         * textSizes must be float like sp
+         * colors by Int
+         */
         fun newInstance(
             clientId: String,
             deviceId: String,
