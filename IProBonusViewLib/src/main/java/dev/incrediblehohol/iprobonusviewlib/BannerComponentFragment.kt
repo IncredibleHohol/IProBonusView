@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.graphics.applyCanvas
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -96,14 +95,14 @@ class BannerComponentFragment : Fragment() {
     }
 
     private fun applyGradient() {
-        val firstColor =
+        val darkColor =
             darkGradientColor ?: resources.getColor(R.color.first_gradient_color, null)
-        val secondColor =
+        val lightColor =
             lightGradientColor ?: resources.getColor(R.color.second_gradient_color, null)
 
         val colorList = IntArray(2)
-        colorList[0] = firstColor
-        colorList[1] = secondColor
+        colorList[0] = darkColor
+        colorList[1] = lightColor
 
         val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colorList)
 
@@ -111,31 +110,51 @@ class BannerComponentFragment : Fragment() {
         binding.viewBackground.background = gradientDrawable
 
 
-        val maskPaint = Paint()
-        maskPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-        val imageMask = Paint()
-        imageMask.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OVER)
-        imageMask.shader =
-            (LinearGradient(0F, 0F, 0F, 0F, firstColor, secondColor, Shader.TileMode.MIRROR))
+//        val maskPaint = Paint()
+//        maskPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+//        val imageMask = Paint()
+//        imageMask.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+//        imageMask.shader =
+//            (LinearGradient(0F, 0F, 0F, 0F, darkColor, lightColor, Shader.TileMode.MIRROR))
+//
+//        val drawable = binding.buttonInfo.drawable
+//
+//        drawable.transparentRegion
 
-        val drawable = binding.buttonInfo.drawable
+//        val image = BitmapFactory.decodeResource(resources, R.drawable.info)
+//        val image2 = BitmapFactory.decodeResource(resources, R.drawable.info)
+//        image.applyCanvas {
+//            this.save()
+//            this.drawBitmap(image, 0F, 0F, imageMask)
+//            this.restore()
+//        }
 
-        drawable.transparentRegion
+//        binding.buttonInfo.setImageBitmap(image)
 
-        val image = BitmapFactory.decodeResource(resources, R.drawable.info)
-        val image2 = BitmapFactory.decodeResource(resources, R.drawable.info)
-        image.applyCanvas {
-            this.save()
-            this.drawBitmap(image, 0F, 0F, imageMask)
-            this.restore()
-        }
-
-        binding.buttonInfo.setImageBitmap(image)
-
-        applyToInfoButton()
+        applyToInfoButton(darkColor, lightColor)
     }
 
-    private fun applyToInfoButton() {
+    private fun applyToInfoButton(darkColor: Int, lightColor: Int) {
+        val src = BitmapFactory.decodeResource(resources, R.drawable.info)
+
+        val w = src.width
+        val h = src.height
+
+        val result = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
+
+        val canvas = Canvas(result)
+
+        canvas.drawBitmap(src, 0F, 0F, null)
+
+        val paint = Paint()
+        val shader: LinearGradient =
+            LinearGradient(0F, 0F, 0F, h.toFloat(), darkColor, lightColor, Shader.TileMode.CLAMP)
+        paint.shader = shader
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+        canvas.drawRect(0F, 0F, w.toFloat(), h.toFloat(), paint)
+
+
+        binding.buttonInfo.setImageBitmap(result)
     }
 
     private fun applySettings() {
