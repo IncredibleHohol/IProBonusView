@@ -2,12 +2,10 @@ package dev.incrediblehohol.iprobonusviewlib
 
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,8 +18,8 @@ const val BURNING_TEXT_SIZE = "burning_text_size"
 const val ARROW_COLOR = "arrow_color"
 const val TOTAL_TEXT_COLOR = "total_text_color"
 const val BURNING_TEXT_COLOR = "burning_text_color"
-const val FIRST_GRADIENT_COLOR = "first_gradient_color"
-const val SECOND_GRADIENT_COLOR = "second_gradient_color"
+const val DARK_GRADIENT_COLOR = "dark_gradient_color"
+const val LIGHT_GRADIENT_COLOR = "light_gradient_color"
 
 class BannerComponentFragment : Fragment() {
 
@@ -53,12 +51,12 @@ class BannerComponentFragment : Fragment() {
         arguments?.getInt(BURNING_TEXT_COLOR).takeIf { it != 0 }
     }
 
-    private val firstGradientColor: Int? by lazy {
-        arguments?.getInt(FIRST_GRADIENT_COLOR).takeIf { it != 0 }
+    private val darkGradientColor: Int? by lazy {
+        arguments?.getInt(DARK_GRADIENT_COLOR).takeIf { it != 0 }
     }
 
-    private val secondGradientColor: Int? by lazy {
-        arguments?.getInt(SECOND_GRADIENT_COLOR).takeIf { it != 0 }
+    private val lightGradientColor: Int? by lazy {
+        arguments?.getInt(LIGHT_GRADIENT_COLOR).takeIf { it != 0 }
     }
 
 
@@ -70,7 +68,6 @@ class BannerComponentFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("myTag", "onCreateView")
         binding = BannerFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -96,34 +93,19 @@ class BannerComponentFragment : Fragment() {
     }
 
     private fun applyGradient() {
-
         val firstColor =
-            firstGradientColor ?: resources.getColor(R.color.first_gradient_color, null)
+            darkGradientColor ?: resources.getColor(R.color.first_gradient_color, null)
         val secondColor =
-            secondGradientColor ?: resources.getColor(R.color.second_gradient_color, null)
-
-        Log.d("myTag", "first = $firstColor, class = $firstGradientColor")
-        Log.d("myTag", "second = $secondColor, class = $secondGradientColor")
-
-        val background =
-            ResourcesCompat.getDrawable(
-                resources,
-                R.drawable.gradient_rectangle,
-                null
-            ) as GradientDrawable
-        background.mutate()
+            lightGradientColor ?: resources.getColor(R.color.second_gradient_color, null)
 
         val colorList = IntArray(2)
-
         colorList[0] = firstColor
         colorList[1] = secondColor
-        background.colors = colorList
 
-        val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, colorList)
+        val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colorList)
 
         binding.buttonInfo.background = gradientDrawable
         binding.viewBackground.background = gradientDrawable
-
     }
 
     private fun applySettings() {
@@ -149,11 +131,11 @@ class BannerComponentFragment : Fragment() {
             binding.textViewBurningBonuses.setTextColor(it)
         }
 
-        firstGradientColor?.let {
+        darkGradientColor?.let {
             applyGradient()
         }
 
-        secondGradientColor?.let {
+        lightGradientColor?.let {
             applyGradient()
         }
     }
@@ -167,8 +149,8 @@ class BannerComponentFragment : Fragment() {
             arrowColor: Int? = null,
             totalTextColor: Int? = null,
             burningTextColor: Int? = null,
-            firstGradientColor: Int? = null,
-            secondGradientColor: Int? = null
+            darkGradientColor: Int? = null,
+            lightGradientColor: Int? = null
         ): BannerComponentFragment {
             return BannerComponentFragment().apply {
                 arguments = bundleOf(
@@ -179,8 +161,8 @@ class BannerComponentFragment : Fragment() {
                     ARROW_COLOR to arrowColor,
                     TOTAL_TEXT_COLOR to totalTextColor,
                     BURNING_TEXT_COLOR to burningTextColor,
-                    FIRST_GRADIENT_COLOR to firstGradientColor,
-                    SECOND_GRADIENT_COLOR to secondGradientColor
+                    DARK_GRADIENT_COLOR to darkGradientColor,
+                    LIGHT_GRADIENT_COLOR to lightGradientColor
                 )
             }
         }
