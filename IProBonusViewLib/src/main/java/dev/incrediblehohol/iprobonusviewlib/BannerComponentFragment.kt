@@ -94,44 +94,24 @@ class BannerComponentFragment : Fragment() {
         }
     }
 
-    private fun applyGradient() {
+    private fun applyColors() {
         val darkColor =
             darkGradientColor ?: resources.getColor(R.color.first_gradient_color, null)
         val lightColor =
             lightGradientColor ?: resources.getColor(R.color.second_gradient_color, null)
 
+        applyToBackgroundView(darkColor, lightColor)
+        applyToInfoButton(darkColor, lightColor)
+    }
+
+    private fun applyToBackgroundView(darkColor: Int, lightColor: Int) {
         val colorList = IntArray(2)
         colorList[0] = darkColor
         colorList[1] = lightColor
 
         val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colorList)
 
-//        binding.buttonInfo.background = gradientDrawable
         binding.viewBackground.background = gradientDrawable
-
-
-//        val maskPaint = Paint()
-//        maskPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-//        val imageMask = Paint()
-//        imageMask.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-//        imageMask.shader =
-//            (LinearGradient(0F, 0F, 0F, 0F, darkColor, lightColor, Shader.TileMode.MIRROR))
-//
-//        val drawable = binding.buttonInfo.drawable
-//
-//        drawable.transparentRegion
-
-//        val image = BitmapFactory.decodeResource(resources, R.drawable.info)
-//        val image2 = BitmapFactory.decodeResource(resources, R.drawable.info)
-//        image.applyCanvas {
-//            this.save()
-//            this.drawBitmap(image, 0F, 0F, imageMask)
-//            this.restore()
-//        }
-
-//        binding.buttonInfo.setImageBitmap(image)
-
-        applyToInfoButton(darkColor, lightColor)
     }
 
     private fun applyToInfoButton(darkColor: Int, lightColor: Int) {
@@ -147,7 +127,7 @@ class BannerComponentFragment : Fragment() {
         canvas.drawBitmap(src, 0F, 0F, null)
 
         val paint = Paint()
-        val shader: LinearGradient =
+        val shader =
             LinearGradient(0F, 0F, 0F, h.toFloat(), darkColor, lightColor, Shader.TileMode.CLAMP)
         paint.shader = shader
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
@@ -181,11 +161,11 @@ class BannerComponentFragment : Fragment() {
         }
 
         darkGradientColor?.let {
-            applyGradient()
+            applyColors()
         }
 
         lightGradientColor?.let {
-            applyGradient()
+            applyColors()
         }
     }
 
