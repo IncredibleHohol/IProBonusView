@@ -1,10 +1,13 @@
 package dev.incrediblehohol.iprobonusviewlib
 
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.view.ContextThemeWrapper
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,6 +20,8 @@ const val BURNING_TEXT_SIZE = "burning_text_size"
 const val ARROW_COLOR = "arrow_color"
 const val TOTAL_TEXT_COLOR = "total_text_color"
 const val BURNING_TEXT_COLOR = "burning_text_color"
+const val FIRST_GRADIENT_COLOR = "first_gradient_color"
+const val SECOND_GRADIENT_COLOR = "second_gradient_color"
 
 class BannerComponentFragment : Fragment() {
 
@@ -48,6 +53,14 @@ class BannerComponentFragment : Fragment() {
         arguments?.getInt(BURNING_TEXT_COLOR).takeIf { it != 0 }
     }
 
+    private val firstGradientColor: Int? by lazy {
+        arguments?.getInt(FIRST_GRADIENT_COLOR).takeIf { it != 0 }
+    }
+
+    private val secondGradientColor: Int? by lazy {
+        arguments?.getInt(SECOND_GRADIENT_COLOR).takeIf { it != 0 }
+    }
+
 
     private lateinit var binding: BannerFragmentBinding
     private val vm: BannerViewModel by viewModels { BannerViewModelFactory(clientId, deviceId) }
@@ -57,7 +70,10 @@ class BannerComponentFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = BannerFragmentBinding.inflate(inflater, container, false)
+        val contextThemeWrapper = ContextThemeWrapper(activity, R.style.Base_ThemeOverlay_AppCompat)
+        val localInflater = inflater.cloneInContext(contextThemeWrapper)
+
+        binding = BannerFragmentBinding.inflate(localInflater, container, false)
         return binding.root
     }
 
@@ -79,6 +95,29 @@ class BannerComponentFragment : Fragment() {
                 Toast.makeText(it, "Do somthing else", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun applyGradient() {
+        val firstColor =
+            firstGradientColor ?: resources.getColor(R.color.first_gradient_color, null)
+        val secondColor =
+            secondGradientColor ?: resources.getColor(R.color.second_gradient_color, null)
+
+        val background =
+            ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.gradient_rectangle,
+                null
+            ) as GradientDrawable
+        val colorList = IntArray(2)
+        background.mutate()
+        colorList[0] = firstColor
+        colorList[colorList.lastIndex] = secondColor
+
+        background.colors = colorList
+
+        binding.buttonInfo.background = background
+        binding.viewBackground.background = background
     }
 
     private fun applySettings() {
@@ -103,6 +142,14 @@ class BannerComponentFragment : Fragment() {
             binding.textViewBurningDate.setTextColor(it)
             binding.textViewBurningBonuses.setTextColor(it)
         }
+
+        firstGradientColor?.let {
+            applyGradient()
+        }
+
+        secondGradientColor?.let {
+            applyGradient()
+        }
     }
 
     companion object {
@@ -113,7 +160,9 @@ class BannerComponentFragment : Fragment() {
             burningTextSize: Float? = null,
             arrowColor: Int? = null,
             totalTextColor: Int? = null,
-            burningTextColor: Int? = null
+            burningTextColor: Int? = null,
+            firstGradientColor: Int? = null,
+            secondGradientColor: Int? = null
         ): BannerComponentFragment {
             return BannerComponentFragment().apply {
                 arguments = bundleOf(
@@ -123,7 +172,9 @@ class BannerComponentFragment : Fragment() {
                     BURNING_TEXT_SIZE to burningTextSize,
                     ARROW_COLOR to arrowColor,
                     TOTAL_TEXT_COLOR to totalTextColor,
-                    BURNING_TEXT_COLOR to burningTextColor
+                    BURNING_TEXT_COLOR to burningTextColor,
+                    FIRST_GRADIENT_COLOR to firstGradientColor,
+                    SECOND_GRADIENT_COLOR to secondGradientColor
                 )
             }
         }
