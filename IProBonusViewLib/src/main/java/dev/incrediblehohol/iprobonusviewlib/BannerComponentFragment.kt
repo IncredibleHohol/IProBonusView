@@ -2,12 +2,12 @@ package dev.incrediblehohol.iprobonusviewlib
 
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -104,31 +104,25 @@ class BannerComponentFragment : Fragment() {
         val secondColor =
             secondGradientColor ?: resources.getColor(R.color.second_gradient_color, null)
 
-        Log.d("myTag", "firstInFr = $firstGradientColor, first = $firstColor")
-        Log.d("myTag", "secondInFr = $secondGradientColor, second = $secondColor")
-
-//        val background =
-//            ResourcesCompat.getDrawable(
-//                resources,
-//                R.drawable.gradient_rectangle,
-//                null
-//            ) as GradientDrawable
+        val background =
+            ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.gradient_rectangle,
+                null
+            ) as GradientDrawable
+        background.mutate()
 
         val colorList = IntArray(2)
 
-        Log.d("myTag", "colorlist = $colorList")
-
-
-
         colorList[0] = firstColor
         colorList[colorList.lastIndex] = secondColor
+        background.colors = colorList
 
-        val gd = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colorList)
+//        val gd = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colorList)
 
-//        background.colors = colorList
 
-        binding.buttonInfo.setBackgroundDrawable(gd)
-        binding.viewBackground.background = gd
+        binding.buttonInfo.background = background
+        binding.viewBackground.background = background
     }
 
     private fun applySettings() {

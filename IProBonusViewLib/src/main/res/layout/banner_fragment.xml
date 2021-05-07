@@ -27,15 +27,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/button_info"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginTop="36dp"
             android:layout_marginEnd="28dp"
-            android:backgroundTint="@android:color/transparent"
             android:contentDescription="@string/description_info"
-            android:src="@drawable/ic_info_button"
+            android:background="@drawable/ic_info_button"
             app:layout_constraintBottom_toTopOf="@id/card_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -117,17 +116,15 @@
                 app:layout_constraintStart_toEndOf="@id/imageView_fire"
                 tools:text="250 бонусов" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/button_arrow"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginTop="39dp"
                 android:layout_marginEnd="18dp"
                 android:layout_marginBottom="31dp"
-                android:backgroundTint="@android:color/transparent"
                 android:contentDescription="@string/description_arrow"
                 android:src="@drawable/ic_arrow"
-
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
