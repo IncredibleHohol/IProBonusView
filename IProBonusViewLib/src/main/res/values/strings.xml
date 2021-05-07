@@ -4,4 +4,6 @@
     <string name="burning_date">%s сгорит</string>
     <string name="description_fire">fire</string>
     <string name="description_arrow">arrow</string>
+    <string name="logo_text">Логотип</string>
+    <string name="description_info">Information</string>
 </resources>
