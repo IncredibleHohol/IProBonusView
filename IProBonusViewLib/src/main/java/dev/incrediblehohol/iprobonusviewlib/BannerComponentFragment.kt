@@ -73,6 +73,12 @@ class BannerComponentFragment : Fragment() {
                 Toast.makeText(it, "Do something", Toast.LENGTH_SHORT).show()
             }
         }
+
+        binding.buttonInfo.setOnClickListener {
+            requireContext().let {
+                Toast.makeText(it, "Do somthing else", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun applySettings() {
