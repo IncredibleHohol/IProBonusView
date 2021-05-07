@@ -3,42 +3,10 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
 }
-apply plugin: 'maven-publish'
+apply from: file('publish.gradle')
 
 def githubProperties = new Properties()
 githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
-
-def getVersionName = { ->
-    return "0.0.3"
-}
-
-def getArtificatId = { ->
-    return "iprobonusviewlib"
-}
-
-publishing {
-    publications {
-        bar(MavenPublication) {
-            groupId 'dev.incrediblehohol.libraries'
-            artifactId getArtificatId()
-            version getVersionName()
-            artifact("$buildDir/outputs/aar/${getArtificatId()}-release.aar")
-        }
-    }
-
-    repositories {
-        maven {
-            name = "GitHubPackages"
-
-            url = uri("https://maven.pkg.github.com/IncredibleHohol/IProBonusView")
-
-            credentials {
-                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
-                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
-            }
-        }
-    }
-}
 
 repositories {
     maven {
@@ -98,5 +66,5 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
 
 
-    implementation 'dev.incrediblehohol.libraries:iprobonusapilib:0.0.3'
+    api 'dev.incrediblehohol.libraries:iprobonusapilib:0.0.5'
 }
