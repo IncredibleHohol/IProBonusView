@@ -2,11 +2,11 @@ package dev.incrediblehohol.iprobonusviewlib
 
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -70,10 +70,8 @@ class BannerComponentFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val contextThemeWrapper = ContextThemeWrapper(activity, R.style.Base_ThemeOverlay_AppCompat)
-        val localInflater = inflater.cloneInContext(contextThemeWrapper)
-
-        binding = BannerFragmentBinding.inflate(localInflater, container, false)
+        Log.d("myTag", "onCreateView")
+        binding = BannerFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -103,6 +101,9 @@ class BannerComponentFragment : Fragment() {
             firstGradientColor ?: resources.getColor(R.color.first_gradient_color, null)
         val secondColor =
             secondGradientColor ?: resources.getColor(R.color.second_gradient_color, null)
+
+        Log.d("myTag", "first = $firstColor, class = $firstGradientColor")
+        Log.d("myTag", "second = $secondColor, class = $secondGradientColor")
 
         val background =
             ResourcesCompat.getDrawable(
