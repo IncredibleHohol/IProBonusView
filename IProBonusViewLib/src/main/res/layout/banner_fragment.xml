@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="dev.incrediblehohol.iprobonusviewlib.BannerViewModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:elevation="4dp"
+        app:cardCornerRadius="20dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView_totalBonuses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="18dp"
+                android:fontFamily="@font/opensans_bold"
+                android:text="@{@string/bonus_quantity(vm.totalBonuses)}"
+
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_medium"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/textView_burningDate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="300 бонусов" />
+
+            <TextView
+                android:id="@+id/textView_burningDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="19dp"
+                android:fontFamily="@font/opensans_regular"
+                android:text="@{@string/burning_date(vm.burningDate)}"
+                android:textSize="@dimen/font_small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView_totalBonuses"
+                tools:text="29.03 сгорит" />
+
+            <ImageView
+                android:id="@+id/imageView_fire"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/description_fire"
+                android:src="@drawable/ic_fire"
+                app:layout_constraintBottom_toBottomOf="@id/textView_burningDate"
+                app:layout_constraintStart_toEndOf="@id/textView_burningDate"
+                app:layout_constraintTop_toTopOf="@id/textView_burningDate" />
+
+            <TextView
+                android:id="@+id/textView_burningBonuses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/opensans_regular"
+                android:text="@{@string/bonus_quantity(vm.burningBonuses)}"
+                android:textSize="@dimen/font_small"
+                app:layout_constraintBaseline_toBaselineOf="@id/textView_burningDate"
+                app:layout_constraintStart_toEndOf="@id/imageView_fire"
+                tools:text="250 бонусов" />
+
+            <ImageView
+                android:id="@+id/imageView_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="39dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="31dp"
+                android:clickable="true"
+                android:contentDescription="@string/description_arrow"
+                android:focusable="true"
+                android:src="@drawable/ic_arrow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
