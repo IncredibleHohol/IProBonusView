@@ -2,6 +2,7 @@ package dev.incrediblehohol.iprobonusviewlib
 
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -97,10 +98,14 @@ class BannerComponentFragment : Fragment() {
     }
 
     private fun applyGradient() {
+
         val firstColor =
             firstGradientColor ?: resources.getColor(R.color.first_gradient_color, null)
         val secondColor =
             secondGradientColor ?: resources.getColor(R.color.second_gradient_color, null)
+
+        Log.d("myTag", "firstInFr = $firstGradientColor, first = $firstColor")
+        Log.d("myTag", "secondInFr = $secondGradientColor, second = $secondColor")
 
 //        val background =
 //            ResourcesCompat.getDrawable(
@@ -110,6 +115,9 @@ class BannerComponentFragment : Fragment() {
 //            ) as GradientDrawable
 
         val colorList = IntArray(2)
+
+        Log.d("myTag", "colorlist = $colorList")
+
 
 
         colorList[0] = firstColor
