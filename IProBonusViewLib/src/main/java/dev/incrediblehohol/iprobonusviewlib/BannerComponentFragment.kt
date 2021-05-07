@@ -118,11 +118,13 @@ class BannerComponentFragment : Fragment() {
         colorList[colorList.lastIndex] = secondColor
         background.colors = colorList
 
+        val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, colorList)
+
 //        val gd = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colorList)
 
 
-        binding.buttonInfo.background = background
-        binding.viewBackground.background = background
+        binding.buttonInfo.background = gradientDrawable
+        binding.viewBackground.background = gradientDrawable
     }
 
     private fun applySettings() {
