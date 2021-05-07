@@ -96,9 +96,9 @@ class BannerComponentFragment : Fragment() {
 
     private fun applyColors() {
         val darkColor =
-            darkGradientColor ?: resources.getColor(R.color.first_gradient_color, null)
+            darkGradientColor ?: resources.getColor(R.color.dark_gradient_color, null)
         val lightColor =
-            lightGradientColor ?: resources.getColor(R.color.second_gradient_color, null)
+            lightGradientColor ?: resources.getColor(R.color.light_gradient_color, null)
 
         applyToBackgroundView(darkColor, lightColor)
         applyToInfoButton(darkColor, lightColor)
