@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -66,6 +67,12 @@ class BannerComponentFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         applySettings()
+
+        binding.buttonArrow.setOnClickListener {
+            requireContext().let {
+                Toast.makeText(it, "Do something", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun applySettings() {
@@ -79,7 +86,7 @@ class BannerComponentFragment : Fragment() {
         }
 
         arrowColor?.let {
-            binding.imageViewArrow.drawable.setTint(it)
+            binding.buttonArrow.drawable.setTint(it)
         }
 
         totalTextColor?.let {
