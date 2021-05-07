@@ -1,15 +1,18 @@
 package dev.incrediblehohol.iprobonusviewlib
 
+import android.graphics.*
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.graphics.applyCanvas
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dev.incrediblehohol.iprobonusviewlib.databinding.BannerFragmentBinding
+
 
 const val CLIENT_ID = "client_id"
 const val DEVICE_ID = "device_id"
@@ -104,8 +107,35 @@ class BannerComponentFragment : Fragment() {
 
         val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colorList)
 
-        binding.buttonInfo.background = gradientDrawable
+//        binding.buttonInfo.background = gradientDrawable
         binding.viewBackground.background = gradientDrawable
+
+
+        val maskPaint = Paint()
+        maskPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        val imageMask = Paint()
+        imageMask.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OVER)
+        imageMask.shader =
+            (LinearGradient(0F, 0F, 0F, 0F, firstColor, secondColor, Shader.TileMode.MIRROR))
+
+        val drawable = binding.buttonInfo.drawable
+
+        drawable.transparentRegion
+
+        val image = BitmapFactory.decodeResource(resources, R.drawable.info)
+        val image2 = BitmapFactory.decodeResource(resources, R.drawable.info)
+        image.applyCanvas {
+            this.save()
+            this.drawBitmap(image, 0F, 0F, imageMask)
+            this.restore()
+        }
+
+        binding.buttonInfo.setImageBitmap(image)
+
+        applyToInfoButton()
+    }
+
+    private fun applyToInfoButton() {
     }
 
     private fun applySettings() {

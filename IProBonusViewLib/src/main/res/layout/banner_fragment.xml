@@ -33,7 +33,7 @@
             android:layout_height="24dp"
             android:layout_marginTop="36dp"
             android:layout_marginEnd="28dp"
-            android:src="@drawable/ic_info_button"
+            android:src="@drawable/info"
             android:contentDescription="@string/description_info"
             app:layout_constraintBottom_toTopOf="@id/card_background"
             app:layout_constraintEnd_toEndOf="parent"
