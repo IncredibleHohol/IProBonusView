@@ -13,15 +13,21 @@ import androidx.fragment.app.viewModels
 import dev.incrediblehohol.iprobonusviewlib.databinding.BannerFragmentBinding
 
 
-const val CLIENT_ID = "client_id"
-const val DEVICE_ID = "device_id"
-const val TOTAL_TEXT_SIZE = "total_text_size"
-const val BURNING_TEXT_SIZE = "burning_text_size"
-const val ARROW_COLOR = "arrow_color"
-const val TOTAL_TEXT_COLOR = "total_text_color"
-const val BURNING_TEXT_COLOR = "burning_text_color"
-const val DARK_GRADIENT_COLOR = "dark_gradient_color"
-const val LIGHT_GRADIENT_COLOR = "light_gradient_color"
+private const val CLIENT_ID = "client_id"
+private const val DEVICE_ID = "device_id"
+private const val TOTAL_TEXT_SIZE = "total_text_size"
+private const val BURNING_TEXT_SIZE = "burning_text_size"
+private const val ARROW_COLOR = "arrow_color"
+private const val TOTAL_TEXT_COLOR = "total_text_color"
+private const val BURNING_TEXT_COLOR = "burning_text_color"
+private const val DARK_GRADIENT_COLOR = "dark_gradient_color"
+private const val LIGHT_GRADIENT_COLOR = "light_gradient_color"
+
+private const val DEF_FLOAT: Float = 0F
+private const val DEF_INT: Int = 0
+
+private const val DEF_POINT: Float = 0F
+private const val DEF_COORDINATE: Float = 0F
 
 class BannerComponentFragment : Fragment() {
 
@@ -34,31 +40,31 @@ class BannerComponentFragment : Fragment() {
     }
 
     private val totalTextSize: Float? by lazy {
-        arguments?.getFloat(TOTAL_TEXT_SIZE)?.takeIf { it > 0F }
+        arguments?.getFloat(TOTAL_TEXT_SIZE)?.takeIf { it > DEF_FLOAT }
     }
 
     private val burningTextSize: Float? by lazy {
-        arguments?.getFloat(BURNING_TEXT_SIZE)?.takeIf { it > 0F }
+        arguments?.getFloat(BURNING_TEXT_SIZE)?.takeIf { it > DEF_FLOAT }
     }
 
     private val arrowColor: Int? by lazy {
-        arguments?.getInt(ARROW_COLOR).takeIf { it != 0 }
+        arguments?.getInt(ARROW_COLOR).takeIf { it != DEF_INT }
     }
 
     private val totalTextColor: Int? by lazy {
-        arguments?.getInt(TOTAL_TEXT_COLOR).takeIf { it != 0 }
+        arguments?.getInt(TOTAL_TEXT_COLOR).takeIf { it != DEF_INT }
     }
 
     private val burningTextColor: Int? by lazy {
-        arguments?.getInt(BURNING_TEXT_COLOR).takeIf { it != 0 }
+        arguments?.getInt(BURNING_TEXT_COLOR).takeIf { it != DEF_INT }
     }
 
     private val darkGradientColor: Int? by lazy {
-        arguments?.getInt(DARK_GRADIENT_COLOR).takeIf { it != 0 }
+        arguments?.getInt(DARK_GRADIENT_COLOR).takeIf { it != DEF_INT }
     }
 
     private val lightGradientColor: Int? by lazy {
-        arguments?.getInt(LIGHT_GRADIENT_COLOR).takeIf { it != 0 }
+        arguments?.getInt(LIGHT_GRADIENT_COLOR).takeIf { it != DEF_INT }
     }
 
 
@@ -105,9 +111,7 @@ class BannerComponentFragment : Fragment() {
     }
 
     private fun applyToBackgroundView(darkColor: Int, lightColor: Int) {
-        val colorList = IntArray(2)
-        colorList[0] = darkColor
-        colorList[1] = lightColor
+        val colorList = intArrayOf(darkColor, lightColor)
 
         val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colorList)
 
@@ -124,14 +128,22 @@ class BannerComponentFragment : Fragment() {
 
         val canvas = Canvas(result)
 
-        canvas.drawBitmap(src, 0F, 0F, null)
+        canvas.drawBitmap(src, DEF_POINT, DEF_POINT, null)
 
         val paint = Paint()
         val shader =
-            LinearGradient(0F, 0F, 0F, h.toFloat(), darkColor, lightColor, Shader.TileMode.CLAMP)
+            LinearGradient(
+                DEF_COORDINATE,
+                DEF_COORDINATE,
+                DEF_COORDINATE,
+                h.toFloat(),
+                darkColor,
+                lightColor,
+                Shader.TileMode.CLAMP
+            )
         paint.shader = shader
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
-        canvas.drawRect(0F, 0F, w.toFloat(), h.toFloat(), paint)
+        canvas.drawRect(DEF_POINT, DEF_POINT, w.toFloat(), h.toFloat(), paint)
 
 
         binding.buttonInfo.setImageBitmap(result)

@@ -66,5 +66,5 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
 
 
-    api 'dev.incrediblehohol.libraries:iprobonusapilib:0.0.5'
+    api 'dev.incrediblehohol.libraries:iprobonusapilib:0.0.8'
 }
